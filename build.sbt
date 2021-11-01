@@ -4,7 +4,7 @@ import sbtassembly.AssemblyPlugin.autoImport.assemblyJarName
 
 name := "prerequisites"
 
-version := "0.1"
+version := "0.2"
 
 scalaVersion := "2.13.6"
 

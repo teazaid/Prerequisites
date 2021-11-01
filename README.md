@@ -17,3 +17,6 @@ https://github.com/teazaid/Prerequisites/blob/main/bin/prerequisites.exe
 
 Оставляйте свои пожелания и отзывы по ссылке: https://github.com/teazaid/Prerequisites/issues
 Всегда можно написать на email: alexander.zaidel@gmail.com
+
+# Updates:
+* 1 Ноября 2021 - значительно расширен список предпосылок. 

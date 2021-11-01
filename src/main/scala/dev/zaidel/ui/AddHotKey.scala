@@ -24,7 +24,13 @@ trait AddHotKey extends JPanel {
     KeyEvent.VK_U,
     KeyEvent.VK_I,
     KeyEvent.VK_O,
-    KeyEvent.VK_P
+    KeyEvent.VK_P,
+    KeyEvent.VK_A,
+    KeyEvent.VK_S,
+    KeyEvent.VK_D,
+    KeyEvent.VK_F,
+    KeyEvent.VK_G,
+    KeyEvent.VK_H,
   ).zipWithIndex.map { case (k, v) => v -> k }.toMap
 
   protected def setKey(keyEvent: Int, identifier: String, checkbox: JCheckBox): Unit = {
