@@ -9,11 +9,15 @@ class TrendPanel(trend: String) extends JPanel {
   setLayout(new GridLayout(1, 1))
 
   val group = new ButtonGroup()
-  private val shortButton = new JRadioButton(s"${trend} Шорт")
-  group.add(shortButton)
   private val longButton = new JRadioButton(s"${trend} Лонг")
-  group.add(longButton)
+  private val shortButton = new JRadioButton(s"${trend} Шорт")
+  private val rangeButton = new JRadioButton(s"${trend} Ренж")
 
-  add(shortButton)
+  group.add(longButton)
+  group.add(shortButton)
+  group.add(rangeButton)
+
   add(longButton)
+  add(shortButton)
+  add(rangeButton)
 }

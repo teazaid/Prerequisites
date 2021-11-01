@@ -1,29 +1,42 @@
 package dev.zaidel.ui
 
+import com.typesafe.config.ConfigFactory
+
 import java.awt.event.{ActionEvent, ActionListener, KeyEvent}
 import java.awt.{BorderLayout, GridLayout}
-import javax.swing.{AbstractAction, JButton, JComponent, JFrame, JPanel, JTabbedPane, KeyStroke, SwingConstants, WindowConstants}
-
+import javax.swing._
+import scala.jdk.CollectionConverters._
 
 class PrerequisitesPanel extends JPanel {
+  private val resetKey = "reset"
+
+  private val config = ConfigFactory.load()
+  private val breakoutItems = config.getStringList("breakout.list")
+    .asScala
+    .map(label => new JCheckBox(label))
+    .toList
+
+  private val falseBreakoutItems = config.getStringList("false-breakout.list")
+    .asScala
+    .map(label => new JCheckBox(label))
+    .toList
+
   def showPanel(): Unit = {
     JFrame.setDefaultLookAndFeelDecorated(true);
 
-    //Create and set up the window.
     val frame = new JFrame("Предпосылки");
     frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     frame.setAlwaysOnTop(true)
 
     val resetButton = new JButton("Сбросить (N)")
 
-    val r = "reset"
     resetButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-      KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), r
+      KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), resetKey
     )
 
     val tabbedPane = new JTabbedPane()
-    val breakOutPanel = new BreakoutPanel()
-    val falseBreakoutPanel = new FalseBreakoutPanel()
+    val breakOutPanel = new CheckboxList(breakoutItems)
+    val falseBreakoutPanel = new CheckboxList(falseBreakoutItems)
 
     val resetListener = new AbstractAction() {
       override def actionPerformed(e: ActionEvent): Unit =  {
@@ -31,7 +44,7 @@ class PrerequisitesPanel extends JPanel {
         falseBreakoutPanel.reset()
       }
     }
-    resetButton.getActionMap().put(r, resetListener)
+    resetButton.getActionMap().put(resetKey, resetListener)
 
     tabbedPane.addTab("Пробой (Z)", breakOutPanel)
 

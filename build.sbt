@@ -1,31 +1,26 @@
 import com.typesafe.sbt.SbtNativePackager.packageArchetype
 import sbtassembly.AssemblyPlugin.assemblySettings
+import sbtassembly.AssemblyPlugin.autoImport.assemblyJarName
 
-name := "stock-screener"
+name := "prerequisites"
 
 version := "0.1"
 
 scalaVersion := "2.13.6"
 
-//val circeVersion = "0.14.1"
-//
-//libraryDependencies ++= Seq(
-//  "io.circe" %% "circe-core",
-//  "io.circe" %% "circe-generic",
-//  "io.circe" %% "circe-parser"
-//).map(_ % circeVersion)
+libraryDependencies += "com.typesafe" % "config" % "1.4.1"
 
 enablePlugins(JavaAppPackaging)
 
-mainClass in Compile := Some("dev.zaidel.ui.PrerequisitesWindow")
+Compile / mainClass := Some("dev.zaidel.ui.PrerequisitesWindow")
 // the assembly settings
 assemblySettings
 
 // we specify the name for our fat jar
-assemblyJarName in assembly := "prerequisites.jar"
+assembly / assemblyJarName := "prerequisites.jar"
 
 // removes all jar mappings in universal and appends the fat jar
-mappings in Universal := {
+Universal / mappings := {
   val universalMappings = (mappings in Universal).value
   val fatJar = (assembly in Compile).value
   val filtered = universalMappings filter {
@@ -35,4 +30,4 @@ mappings in Universal := {
 }
 
 // the bash scripts classpath only needs the fat jar
-scriptClasspath := Seq( (assemblyJarName in assembly).value )
+scriptClasspath := Seq( ( assembly / assemblyJarName).value )
