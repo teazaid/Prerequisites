@@ -31,3 +31,4 @@ Universal / mappings := {
 
 // the bash scripts classpath only needs the fat jar
 scriptClasspath := Seq( ( assembly / assemblyJarName).value )
+

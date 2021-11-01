@@ -10,18 +10,18 @@ import scala.jdk.CollectionConverters._
 class PrerequisitesPanel extends JPanel {
   private val resetKey = "reset"
 
-  private val config = ConfigFactory.load()
-  private val breakoutItems = config.getStringList("breakout.list")
-    .asScala
-    .map(label => new JCheckBox(label))
-    .toList
-
-  private val falseBreakoutItems = config.getStringList("false-breakout.list")
-    .asScala
-    .map(label => new JCheckBox(label))
-    .toList
-
   def showPanel(): Unit = {
+    val config = ConfigFactory.load()
+    val breakoutItems = config.getStringList("breakout.list")
+      .asScala
+      .map(label => new JCheckBox(label))
+      .toList
+
+    val falseBreakoutItems = config.getStringList("false-breakout.list")
+      .asScala
+      .map(label => new JCheckBox(label))
+      .toList
+
     JFrame.setDefaultLookAndFeelDecorated(true);
 
     val frame = new JFrame("Предпосылки");
