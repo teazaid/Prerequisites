@@ -10,6 +10,7 @@
 
 # Бинарные файлы:
 ## Linux, MacOs:
+https://github.com/teazaid/Prerequisites/tree/main/bin/prerequisites.jar
 
 ## Windows:
 
