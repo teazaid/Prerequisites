@@ -10,12 +10,12 @@
 
 # Бинарные файлы:
 ## Linux, MacOs:
-Предпосылки: https://github.com/teazaid/Prerequisites/tree/main/bin/prerequisites.jar
-Чек-лист: https://github.com/teazaid/Prerequisites/tree/main/bin/check-list.jar
+* Предпосылки: https://github.com/teazaid/Prerequisites/tree/main/bin/prerequisites.jar
+* Чек-лист: https://github.com/teazaid/Prerequisites/tree/main/bin/check-list.jar
 
 ## Windows:
-Предпосылки: https://github.com/teazaid/Prerequisites/blob/main/bin/prerequisites.exe
-Чек-лист: https://github.com/teazaid/Prerequisites/blob/main/bin/check-list.exe
+* Предпосылки: https://github.com/teazaid/Prerequisites/blob/main/bin/prerequisites.exe
+* Чек-лист: https://github.com/teazaid/Prerequisites/blob/main/bin/check-list.exe
 
 Оставляйте свои пожелания и отзывы по ссылке: https://github.com/teazaid/Prerequisites/issues
 Всегда можно написать на email: alexander.zaidel@gmail.com
