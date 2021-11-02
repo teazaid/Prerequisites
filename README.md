@@ -11,6 +11,7 @@
 # Бинарные файлы:
 ## Linux, MacOs:
 https://github.com/teazaid/Prerequisites/tree/main/bin/prerequisites.jar
+https://github.com/teazaid/Prerequisites/tree/main/bin/check-list.jar
 
 ## Windows:
 https://github.com/teazaid/Prerequisites/blob/main/bin/prerequisites.exe
@@ -20,3 +21,5 @@ https://github.com/teazaid/Prerequisites/blob/main/bin/prerequisites.exe
 
 # Updates:
 * 1 Ноября 2021 - значительно расширен список предпосылок. 
+* 2 Ноября 2021 - добавлен чек-лист сделок.  
+* При первом запуске чек-листа, в папке появится файл чек-лист.txt. Добавьте в него элементы из вашего чек листа, по одному в строке и перезапустите программу.
