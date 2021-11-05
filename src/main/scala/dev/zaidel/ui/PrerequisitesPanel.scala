@@ -4,23 +4,26 @@ import com.typesafe.config.ConfigFactory
 
 import java.awt.event.{ActionEvent, ActionListener, KeyEvent}
 import java.awt.{BorderLayout, GridLayout}
+import java.io.File
 import javax.swing._
 import scala.jdk.CollectionConverters._
 
-class PrerequisitesPanel extends JPanel {
+class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
   private val resetKey = "reset"
 
   def showPanel(): Unit = {
     val config = ConfigFactory.load()
-    val breakoutItems = config.getStringList("breakout.list")
-      .asScala
+    val breakoutFallback = config.getStringList("breakout.list").asScala.toList
+
+    val breakoutItems = readWithFallback(new File("пробой.txt"), breakoutFallback)
       .map(label => new JCheckBox(label))
+
+    val falseBreakoutFallback = config.getStringList("false-breakout.list")
+      .asScala
       .toList
 
-    val falseBreakoutItems = config.getStringList("false-breakout.list")
-      .asScala
+    val falseBreakoutItems = readWithFallback(new File("отбой.txt"), falseBreakoutFallback)
       .map(label => new JCheckBox(label))
-      .toList
 
     JFrame.setDefaultLookAndFeelDecorated(true);
 

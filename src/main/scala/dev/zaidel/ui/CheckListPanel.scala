@@ -2,12 +2,10 @@ package dev.zaidel.ui
 
 import java.awt.BorderLayout
 import java.awt.event.{ActionEvent, ActionListener, KeyEvent}
-import java.io.{File, PrintWriter}
+import java.io.File
 import javax.swing._
-import scala.io.Source
-import scala.util.Using
 
-class CheckListPanel extends JPanel {
+class CheckListPanel extends JPanel with ReadFromFileWithFallback {
   private val resetKey = "reset"
 
   private val defaultCheckList = List(
@@ -22,17 +20,8 @@ class CheckListPanel extends JPanel {
   )
 
   def showPanel(): Unit = {
-    val file = new File("чек-лист.txt")
-    val checklistItems = (if (file.exists())
-      Using(Source.fromFile(file)) {
-        resource => resource.getLines().toList
-      }
-    else
-      Using(new PrintWriter(file)) { pw =>
-        defaultCheckList.foreach(pw.println)
-        defaultCheckList
-      }
-      ).getOrElse(defaultCheckList).map(label => new JCheckBox(label))
+    val checklistItems = readWithFallback(new File("чек-лист.txt"), defaultCheckList)
+      .map(label => new JCheckBox(label))
 
     JFrame.setDefaultLookAndFeelDecorated(true);
 
