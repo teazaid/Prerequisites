@@ -10,6 +10,7 @@ import scala.jdk.CollectionConverters._
 
 class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
   private val resetKey = "reset"
+  private val continueKey = "continue"
 
   def showPanel(): Unit = {
     val config = ConfigFactory.load()
@@ -32,9 +33,13 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     frame.setAlwaysOnTop(true)
 
     val resetButton = new JButton("Сбросить (N)")
+    val continueButton = new JButton("Продолжныть (M)")
 
     resetButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
       KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), resetKey
+    )
+    continueButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+      KeyStroke.getKeyStroke(KeyEvent.VK_M, 0), continueKey
     )
 
     val tabbedPane = new JTabbedPane()
@@ -47,7 +52,15 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
         falseBreakoutPanel.reset()
       }
     }
+    val continueListener = new AbstractAction() {
+      override def actionPerformed(e: ActionEvent): Unit = {
+        breakOutPanel.hideUnChecked()
+        falseBreakoutPanel.hideUnChecked()
+      }
+    }
+
     resetButton.getActionMap().put(resetKey, resetListener)
+    continueButton.getActionMap().put(continueKey, continueListener)
 
     tabbedPane.addTab("Пробой (Z)", breakOutPanel)
 
@@ -75,15 +88,40 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
         falseBreakoutPanel.reset()
       }
     })
+    continueButton.addActionListener(new ActionListener {
+      override def actionPerformed(e: ActionEvent): Unit = {
+        breakOutPanel.hideUnChecked()
+        falseBreakoutPanel.hideUnChecked()
+      }
+    })
 
-    val top = new JPanel(new GridLayout(2, 1))
+    val top = new JPanel(new GridLayout(4, 1))
+
     top.add(new TrendPanel("ГТ"))
     top.add(new TrendPanel("ЛТ"))
+    val levelPanel = new JComboBox[String](Array(
+      "Излом тренда",
+      "Зеркальный",
+      "Уровень который встречался раньше",
+      "Образованный ЛП",
+      "Образованный проторговкой",
+      "Лимитный",
+      "Паранормального бара",
+      "Образованный ГЭПом"
+    ))
+    top.add(new JLabel("Уровень:"))
+    top.add(levelPanel)
+
+
+    val southPanel = new JPanel(new GridLayout(1, 2))
 
     val mainPanel = new JPanel(new BorderLayout())
     mainPanel.add(top, BorderLayout.NORTH)
     mainPanel.add(tabbedPane, BorderLayout.CENTER)
-    mainPanel.add(resetButton, BorderLayout.SOUTH)
+    mainPanel.add(southPanel, BorderLayout.SOUTH)
+
+    southPanel.add(continueButton)
+    southPanel.add(resetButton)
 
     frame.setContentPane(mainPanel)
 
