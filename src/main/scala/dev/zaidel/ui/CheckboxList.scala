@@ -20,10 +20,10 @@ class CheckboxList(prerequisites: List[JCheckBox]) extends AddHotKey {
     prerequisites.foreach(_.setVisible(true))
   }
 
-  def hideUnChecked(): Unit = {
+  def getSelectedPrerequisites(): List[String] = {
     prerequisites.collect {
-      // hide non selected check items
-      case checkBox if !checkBox.isSelected => checkBox.setVisible(false)
+      // get selected items
+      case checkBox if checkBox.isSelected => checkBox.getText()
     }
   }
 }

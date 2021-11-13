@@ -19,6 +19,12 @@ class TrendPanel(trend: String) extends JPanel {
   group.add(shortButton)
   group.add(rangeButton)
 
+  def getSelected(): String = {
+    List(longButton, shortButton, rangeButton).collectFirst {
+      case radioButton if radioButton.isSelected => radioButton.getText
+    }.getOrElse("")
+  }
+
   add(longButton)
   add(shortButton)
   add(rangeButton)

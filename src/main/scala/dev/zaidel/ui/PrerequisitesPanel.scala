@@ -26,6 +26,18 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     val falseBreakoutItems = readWithFallback(new File("отбой.txt"), falseBreakoutFallback)
       .map(label => new JCheckBox(label))
 
+    val levelComboBox = new JComboBox[String](Array(
+      "Излом тренда",
+      "Зеркальный",
+      "Который встречался раньше",
+      "Образованный ЛП",
+      "Образованный проторговкой",
+      "Лимитный",
+      "Паранормального бара",
+      "Образованный ГЭПом"
+    ))
+    val gtPanel = new TrendPanel("ГТ")
+    val ltPanel = new TrendPanel("ЛТ")
     JFrame.setDefaultLookAndFeelDecorated(true);
 
     val frame = new JFrame("Предпосылки");
@@ -33,7 +45,7 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     frame.setAlwaysOnTop(true)
 
     val resetButton = new JButton("Сбросить (N)")
-    val continueButton = new JButton("Продолжныть (M)")
+    val continueButton = new JButton("Далее (M)")
 
     resetButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
       KeyStroke.getKeyStroke(KeyEvent.VK_N, 0), resetKey
@@ -54,8 +66,7 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     }
     val continueListener = new AbstractAction() {
       override def actionPerformed(e: ActionEvent): Unit = {
-        breakOutPanel.hideUnChecked()
-        falseBreakoutPanel.hideUnChecked()
+        showModalWindow(levelComboBox, gtPanel, ltPanel, breakOutPanel, falseBreakoutPanel)
       }
     }
 
@@ -90,28 +101,16 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     })
     continueButton.addActionListener(new ActionListener {
       override def actionPerformed(e: ActionEvent): Unit = {
-        breakOutPanel.hideUnChecked()
-        falseBreakoutPanel.hideUnChecked()
+        showModalWindow(levelComboBox, gtPanel, ltPanel, breakOutPanel, falseBreakoutPanel)
       }
     })
 
     val top = new JPanel(new GridLayout(4, 1))
+    top.add(gtPanel)
+    top.add(ltPanel)
 
-    top.add(new TrendPanel("ГТ"))
-    top.add(new TrendPanel("ЛТ"))
-    val levelPanel = new JComboBox[String](Array(
-      "Излом тренда",
-      "Зеркальный",
-      "Уровень который встречался раньше",
-      "Образованный ЛП",
-      "Образованный проторговкой",
-      "Лимитный",
-      "Паранормального бара",
-      "Образованный ГЭПом"
-    ))
     top.add(new JLabel("Уровень:"))
-    top.add(levelPanel)
-
+    top.add(levelComboBox)
 
     val southPanel = new JPanel(new GridLayout(1, 2))
 
@@ -120,13 +119,18 @@ class PrerequisitesPanel extends JPanel with ReadFromFileWithFallback {
     mainPanel.add(tabbedPane, BorderLayout.CENTER)
     mainPanel.add(southPanel, BorderLayout.SOUTH)
 
-    southPanel.add(continueButton)
     southPanel.add(resetButton)
+    southPanel.add(continueButton)
 
     frame.setContentPane(mainPanel)
 
     frame.setResizable(false)
     frame.pack()
     frame.setVisible(true)
+  }
+
+  private def showModalWindow(levelComboBox: JComboBox[String], gtPanel: TrendPanel, ltPanel: TrendPanel, breakOutPanel: CheckboxList, falseBreakoutPanel: CheckboxList): Unit = {
+    val allSelectedPrerequisites = breakOutPanel.getSelectedPrerequisites ++ falseBreakoutPanel.getSelectedPrerequisites()
+    new DetailsFrame(allSelectedPrerequisites, gtPanel.getSelected(), ltPanel.getSelected(), levelComboBox.getSelectedItem.toString)
   }
 }
