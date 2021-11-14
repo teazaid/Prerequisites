@@ -17,5 +17,13 @@ class CheckboxList(prerequisites: List[JCheckBox]) extends AddHotKey {
 
   def reset(): Unit = {
     prerequisites.foreach(_.setSelected(false))
+    prerequisites.foreach(_.setVisible(true))
+  }
+
+  def getSelectedPrerequisites(): List[String] = {
+    prerequisites.collect {
+      // get selected items
+      case checkBox if checkBox.isSelected => checkBox.getText()
+    }
   }
 }

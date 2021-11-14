@@ -13,9 +13,17 @@ class TrendPanel(trend: String) extends JPanel {
   private val shortButton = new JRadioButton(s"${trend} Шорт")
   private val rangeButton = new JRadioButton(s"${trend} Ренж")
 
+  longButton.setSelected(true)
+
   group.add(longButton)
   group.add(shortButton)
   group.add(rangeButton)
+
+  def getSelected(): String = {
+    List(longButton, shortButton, rangeButton).collectFirst {
+      case radioButton if radioButton.isSelected => radioButton.getText
+    }.getOrElse("")
+  }
 
   add(longButton)
   add(shortButton)
